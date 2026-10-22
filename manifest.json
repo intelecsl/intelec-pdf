@@ -1,0 +1,132 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/teams/v1.17/MicrosoftTeams.schema.json",
+  "manifestVersion": "1.17",
+  "id": "ba51c3e1-1e94-4d40-a481-70e7420dae37",
+  "version": "1.2.0",
+  "localizationInfo": {
+    "defaultLanguageTag": "es-es"
+  },
+  "developer": {
+    "name": "Intelec S.L.",
+    "websiteUrl": "https://intelecsl.github.io/intelec-pdf/",
+    "privacyUrl": "https://intelecsl.github.io/intelec-pdf/",
+    "termsOfUseUrl": "https://intelecsl.github.io/intelec-pdf/"
+  },
+  "name": {
+    "short": "Correo a PDF Intelec",
+    "full": "Correo a PDF Intelec"
+  },
+  "description": {
+    "short": "Guarda el correo como PDF y lo descarga.",
+    "full": "Guarda el correo abierto como PDF (cabecera, cuerpo, imágenes y lista de adjuntos) y lo descarga automáticamente."
+  },
+  "icons": {
+    "outline": "outline.png",
+    "color": "color.png"
+  },
+  "accentColor": "#293A5F",
+  "validDomains": [
+    "intelecsl.github.io"
+  ],
+  "authorization": {
+    "permissions": {
+      "resourceSpecific": [
+        {
+          "name": "MailboxItem.Read.User",
+          "type": "Delegated"
+        }
+      ]
+    }
+  },
+  "extensions": [
+    {
+      "requirements": {
+        "scopes": [
+          "mail"
+        ],
+        "capabilities": [
+          {
+            "name": "Mailbox",
+            "minVersion": "1.8"
+          }
+        ]
+      },
+      "runtimes": [
+        {
+          "id": "TaskPaneRuntime",
+          "type": "general",
+          "code": {
+            "page": "https://intelecsl.github.io/intelec-pdf/taskpane.html?v=1.2"
+          },
+          "lifetime": "short",
+          "actions": [
+            {
+              "id": "TaskPaneRuntimeShow",
+              "type": "openPage",
+              "pinnable": true,
+              "view": "dashboard"
+            }
+          ]
+        }
+      ],
+      "ribbons": [
+        {
+          "contexts": [
+            "mailRead"
+          ],
+          "tabs": [
+            {
+              "builtInTabId": "TabDefault",
+              "groups": [
+                {
+                  "id": "ipdfGroup",
+                  "label": "Intelec",
+                  "icons": [
+                    {
+                      "size": 16,
+                      "url": "https://intelecsl.github.io/intelec-pdf/assets/icon-16.png"
+                    },
+                    {
+                      "size": 32,
+                      "url": "https://intelecsl.github.io/intelec-pdf/assets/icon-32.png"
+                    },
+                    {
+                      "size": 80,
+                      "url": "https://intelecsl.github.io/intelec-pdf/assets/icon-80.png"
+                    }
+                  ],
+                  "controls": [
+                    {
+                      "id": "ipdfButton",
+                      "type": "button",
+                      "label": "Guardar PDF",
+                      "icons": [
+                        {
+                          "size": 16,
+                          "url": "https://intelecsl.github.io/intelec-pdf/assets/icon-16.png"
+                        },
+                        {
+                          "size": 32,
+                          "url": "https://intelecsl.github.io/intelec-pdf/assets/icon-32.png"
+                        },
+                        {
+                          "size": 80,
+                          "url": "https://intelecsl.github.io/intelec-pdf/assets/icon-80.png"
+                        }
+                      ],
+                      "supertip": {
+                        "title": "Guardar PDF",
+                        "description": "Convierte este correo en PDF y lo descarga automáticamente."
+                      },
+                      "actionId": "TaskPaneRuntimeShow"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

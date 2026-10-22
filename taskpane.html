@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Correo a PDF · Intelec</title>
+<link rel="icon" href="assets/icon-32.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Raleway:wght@600;700&display=swap" rel="stylesheet">
+<script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
+<script src="lib/purify.min.js"></script>
+<script src="lib/html2canvas.min.js"></script>
+<script src="lib/jspdf.umd.min.js"></script>
+<script src="pdfbuilder.js?v=1.2"></script>
+<style>
+  :root { --navy:#293A5F; --yellow:#F8DB2C; --bg:#f4f6fb; --ok:#1f7a3f; --err:#b3261e; }
+  * { box-sizing:border-box; }
+  body { margin:0; font-family:"Open Sans",Segoe UI,Arial,sans-serif; background:var(--bg); color:#1d2433; font-size:13px; }
+  header { background:var(--navy); color:#fff; padding:14px 16px; border-bottom:4px solid var(--yellow); display:flex; align-items:center; justify-content:space-between; }
+  header h1 { font-family:Raleway,sans-serif; font-size:16px; margin:0; font-weight:700; }
+  .badge { background:var(--yellow); color:var(--navy); font-weight:700; font-size:11px; border-radius:10px; padding:2px 8px; }
+  main { padding:16px; }
+  .card { background:#fff; border-radius:8px; padding:14px; box-shadow:0 1px 3px rgba(0,0,0,.08); margin-bottom:12px; }
+  .subj { font-family:Raleway,sans-serif; font-weight:700; color:var(--navy); font-size:14px; margin-bottom:4px; word-break:break-word; }
+  .muted { color:#5b6577; font-size:12px; word-break:break-word; }
+  .status { display:flex; gap:10px; align-items:center; }
+  .spin { width:18px; height:18px; border:3px solid #d5dbe8; border-top-color:var(--navy); border-radius:50%; animation:s 0.8s linear infinite; flex:none; }
+  @keyframes s { to { transform:rotate(360deg); } }
+  .ok { color:var(--ok); font-weight:600; } .err { color:var(--err); font-weight:600; }
+  .fname { font-family:Consolas,monospace; font-size:11.5px; background:var(--bg); padding:6px 8px; border-radius:4px; margin-top:8px; word-break:break-all; }
+  button { width:100%; padding:10px; border:0; border-radius:6px; font-family:inherit; font-size:13px; font-weight:600; cursor:pointer; margin-top:8px; }
+  .primary { background:var(--navy); color:#fff; } .primary:hover { background:#1e2b47; }
+  .secondary { background:#fff; color:var(--navy); border:1px solid var(--navy); }
+  button:disabled { opacity:.5; cursor:default; }
+  label.opt { display:flex; gap:8px; align-items:center; font-size:12px; margin-top:6px; }
+  select { font-family:inherit; font-size:12px; padding:4px; flex:1; }
+  .hidden { display:none; }
+</style>
+</head>
+<body>
+<header><h1>Correo a PDF</h1><span class="badge" id="ver">v1.2</span></header>
+<main>
+  <div class="card" id="mailCard">
+    <div class="subj" id="subj">Cargando correo…</div>
+    <div class="muted" id="from"></div>
+  </div>
+
+  <div class="card">
+    <div class="status" id="status"><div class="spin"></div><span>Preparando…</span></div>
+    <div class="fname hidden" id="fname"></div>
+    <button class="primary hidden" id="btnAgain">Descargar de nuevo</button>
+    <button class="secondary hidden" id="btnWindow">Descargar en ventana aparte</button>
+  </div>
+
+  <div class="card">
+    <label class="opt">Método de descarga
+      <select id="method">
+        <option value="auto">Automático</option>
+        <option value="direct">Directo (panel)</option>
+        <option value="window">Ventana aparte</option>
+      </select>
+    </label>
+    <div class="muted" style="margin-top:6px">Si en tu Outlook no aparece la descarga, elige «Ventana aparte».</div>
+  </div>
+</main>
+<script src="taskpane.js?v=1.2"></script>
+</body>
+</html>

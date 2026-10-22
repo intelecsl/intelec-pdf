@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OfficeApp xmlns="http://schemas.microsoft.com/office/appforoffice/1.1"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0"
+           xmlns:mailappor="http://schemas.microsoft.com/office/mailappversionoverrides/1.0"
+           xsi:type="MailApp">
+  <Id>ba51c3e1-1e94-4d40-a481-70e7420dae37</Id>
+  <Version>1.2.0.0</Version>
+  <ProviderName>Intelec S.L.</ProviderName>
+  <DefaultLocale>es-ES</DefaultLocale>
+  <DisplayName DefaultValue="Correo a PDF Intelec"/>
+  <Description DefaultValue="Guarda el correo abierto como PDF (cabecera, cuerpo, imágenes y lista de adjuntos) y lo descarga automáticamente."/>
+  <IconUrl DefaultValue="https://intelecsl.github.io/intelec-pdf/assets/icon-64.png"/>
+  <HighResolutionIconUrl DefaultValue="https://intelecsl.github.io/intelec-pdf/assets/icon-128.png"/>
+  <SupportUrl DefaultValue="https://intelecsl.github.io/intelec-pdf/"/>
+  <AppDomains>
+    <AppDomain>https://intelecsl.github.io</AppDomain>
+  </AppDomains>
+  <Hosts>
+    <Host Name="Mailbox"/>
+  </Hosts>
+  <Requirements>
+    <Sets>
+      <Set Name="Mailbox" MinVersion="1.1"/>
+    </Sets>
+  </Requirements>
+  <FormSettings>
+    <Form xsi:type="ItemRead">
+      <DesktopSettings>
+        <SourceLocation DefaultValue="https://intelecsl.github.io/intelec-pdf/taskpane.html?v=1.2"/>
+        <RequestedHeight>250</RequestedHeight>
+      </DesktopSettings>
+    </Form>
+  </FormSettings>
+  <Permissions>ReadItem</Permissions>
+  <Rule xsi:type="RuleCollection" Mode="Or">
+    <Rule xsi:type="ItemIs" ItemType="Message" FormType="Read"/>
+  </Rule>
+  <DisableEntityHighlighting>false</DisableEntityHighlighting>
+
+  <VersionOverrides xmlns="http://schemas.microsoft.com/office/mailappversionoverrides" xsi:type="VersionOverridesV1_0">
+    <VersionOverrides xmlns="http://schemas.microsoft.com/office/mailappversionoverrides/1.1" xsi:type="VersionOverridesV1_1">
+      <Requirements>
+        <bt:Sets DefaultMinVersion="1.8">
+          <bt:Set Name="Mailbox"/>
+        </bt:Sets>
+      </Requirements>
+      <Hosts>
+        <Host xsi:type="MailHost">
+          <DesktopFormFactor>
+            <FunctionFile resid="Commands.Url"/>
+            <ExtensionPoint xsi:type="MessageReadCommandSurface">
+              <OfficeTab id="TabDefault">
+                <Group id="ipdfGroup">
+                  <Label resid="Group.Label"/>
+                  <Control xsi:type="Button" id="ipdfButton">
+                    <Label resid="Button.Label"/>
+                    <Supertip>
+                      <Title resid="Button.Label"/>
+                      <Description resid="Button.Tooltip"/>
+                    </Supertip>
+                    <Icon>
+                      <bt:Image size="16" resid="Icon.16"/>
+                      <bt:Image size="32" resid="Icon.32"/>
+                      <bt:Image size="80" resid="Icon.80"/>
+                    </Icon>
+                    <Action xsi:type="ShowTaskpane">
+                      <SourceLocation resid="Taskpane.Url"/>
+                      <SupportsPinning>true</SupportsPinning>
+                    </Action>
+                  </Control>
+                </Group>
+              </OfficeTab>
+            </ExtensionPoint>
+          </DesktopFormFactor>
+        </Host>
+      </Hosts>
+      <Resources>
+        <bt:Images>
+          <bt:Image id="Icon.16" DefaultValue="https://intelecsl.github.io/intelec-pdf/assets/icon-16.png"/>
+          <bt:Image id="Icon.32" DefaultValue="https://intelecsl.github.io/intelec-pdf/assets/icon-32.png"/>
+          <bt:Image id="Icon.80" DefaultValue="https://intelecsl.github.io/intelec-pdf/assets/icon-80.png"/>
+        </bt:Images>
+        <bt:Urls>
+          <bt:Url id="Commands.Url" DefaultValue="https://intelecsl.github.io/intelec-pdf/commands.html"/>
+          <bt:Url id="Taskpane.Url" DefaultValue="https://intelecsl.github.io/intelec-pdf/taskpane.html?v=1.2"/>
+        </bt:Urls>
+        <bt:ShortStrings>
+          <bt:String id="Group.Label" DefaultValue="Intelec"/>
+          <bt:String id="Button.Label" DefaultValue="Guardar PDF"/>
+        </bt:ShortStrings>
+        <bt:LongStrings>
+          <bt:String id="Button.Tooltip" DefaultValue="Convierte este correo en PDF y lo descarga automáticamente."/>
+        </bt:LongStrings>
+      </Resources>
+    </VersionOverrides>
+  </VersionOverrides>
+</OfficeApp>
