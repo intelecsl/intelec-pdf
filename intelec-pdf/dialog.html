@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Descargando PDF · Intelec</title>
+<script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
+<style>
+  body { margin:0; font-family:"Open Sans",Segoe UI,Arial,sans-serif; background:#f4f6fb; color:#1d2433; display:flex; align-items:center; justify-content:center; height:100vh; }
+  .box { background:#fff; border-top:4px solid #F8DB2C; border-radius:8px; padding:20px; max-width:360px; text-align:center; box-shadow:0 1px 4px rgba(0,0,0,.1); }
+  h2 { font-family:Raleway,sans-serif; color:#293A5F; font-size:16px; margin:0 0 8px; }
+  #n { font-family:Consolas,monospace; font-size:11px; word-break:break-all; color:#5b6577; }
+  button { margin-top:12px; padding:9px 16px; border:0; border-radius:6px; background:#293A5F; color:#fff; font-weight:600; cursor:pointer; }
+</style>
+</head>
+<body>
+<div class="box">
+  <h2 id="h">Recibiendo PDF…</h2>
+  <div id="n"></div>
+  <button id="b" style="display:none">Descargar</button>
+</div>
+<script>
+(function () {
+  var name = "correo.pdf", total = 0, parts = [], got = 0, url = null, ended = false;
+  function save() {
+    var a = document.createElement("a");
+    a.href = url; a.download = name; document.body.appendChild(a); a.click(); a.remove();
+  }
+  function finish() {
+    var bin = atob(parts.join("")), bytes = new Uint8Array(bin.length);
+    for (var i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+    var blob = new Blob([bytes], { type: "application/pdf" });
+    url = URL.createObjectURL(blob);
+    document.getElementById("h").textContent = "PDF descargado";
+    var b = document.getElementById("b"); b.style.display = ""; b.textContent = "Descargar otra vez"; b.onclick = save;
+    if (window.navigator && window.navigator.msSaveOrOpenBlob) window.navigator.msSaveOrOpenBlob(blob, name);
+    else save();
+    setTimeout(function () { Office.context.ui.messageParent(JSON.stringify({ t: "done" })); }, 600);
+  }
+  Office.onReady(function () {
+    Office.context.ui.addHandlerAsync(Office.EventType.DialogParentMessageReceived, function (ev) {
+      var m = JSON.parse(ev.message);
+      if (m.t === "meta") { name = m.name; total = m.total; parts = new Array(total); got = 0;
+        document.getElementById("n").textContent = name; }
+      else if (m.t === "chunk") { if (parts[m.i] == null) got++; parts[m.i] = m.d; }
+      else if (m.t === "end") ended = true;
+      if (ended && got === total && !url) finish();
+    }, function () {
+      Office.context.ui.messageParent(JSON.stringify({ t: "ready" }));
+    });
+  });
+})();
+</script>
+</body>
+</html>
