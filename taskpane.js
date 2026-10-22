@@ -1,7 +1,7 @@
 /* Intelec · Correo a PDF — panel de Outlook */
 (function () {
   "use strict";
-  var VERSION = "1.2";
+  var VERSION = "1.3";
   var BASE = location.href.replace(/[^\/]*$/, "");
   var CHUNK = 30000;
   var last = null; // { bytes, fileName }
@@ -13,18 +13,6 @@
     s.innerHTML = (kind === "busy" ? '<div class="spin"></div>' : "") +
       '<span class="' + (kind === "ok" ? "ok" : kind === "err" ? "err" : "") + '"></span>';
     s.lastChild.textContent = text;
-  }
-
-  function getMethod() {
-    try { return localStorage.getItem("ipdf-method") || "auto"; } catch (e) { return "auto"; }
-  }
-
-  function resolveMethod() {
-    var m = getMethod();
-    if (m !== "auto") return m;
-    var p = (Office.context.diagnostics && Office.context.diagnostics.platform) || "";
-    // Outlook web descarga desde el panel; escritorio (clásico y nuevo) mejor en ventana
-    return p === "OfficeOnline" ? "direct" : "window";
   }
 
   function wrap(fn) {
@@ -122,9 +110,8 @@
 
   function download() {
     if (!last) return Promise.resolve();
-    var m = resolveMethod();
-    return (m === "window" ? downloadWindow : downloadDirect)(last.bytes, last.fileName).then(function () {
-      setStatus("ok", m === "window" ? "PDF descargado (ventana aparte)." : "PDF descargado.");
+    return downloadDirect(last.bytes, last.fileName).then(function () {
+      setStatus("ok", "PDF descargado.");
     });
   }
 
@@ -153,9 +140,6 @@
 
   Office.onReady(function () {
     $("ver").textContent = "v" + VERSION;
-    var sel = $("method");
-    sel.value = getMethod();
-    sel.onchange = function () { try { localStorage.setItem("ipdf-method", sel.value); } catch (e) {} };
     $("btnAgain").onclick = function () {
       download().catch(function (e) { setStatus("err", "Error: " + e.message); });
     };

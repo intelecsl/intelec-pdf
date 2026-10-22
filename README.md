@@ -1,12 +1,12 @@
-# Correo a PDF Intelec (v1.2)
+# Correo a PDF Intelec (v1.3)
 
 Complemento de Outlook: botón **Guardar PDF** en la cinta al leer un correo → genera el PDF y lo descarga.
 
 - Cabecera: asunto, De, Enviado, Para, CC y **lista de adjuntos** (nombre y tamaño).
 - Cuerpo HTML con estilos e imágenes incrustadas (cid:) — texto seleccionable/buscable.
 - Nombre: `AAAA-MM-DD_Remitente_Asunto.pdf` (sin tildes ni caracteres especiales; quita RE:/RV:/FW:).
-- Pie con nombre y nº de página. Producer/Creator: "Intelec Correo a PDF v1.2".
-- Descarga: Automático (Outlook web → directa; escritorio → ventana aparte vía Dialog API), configurable en el panel.
+- Pie con nombre y nº de página. Producer/Creator: "Intelec Correo a PDF v1.3".
+- Descarga directa desde el panel; botón de respaldo «Abrir en ventana» (Dialog API) si un Outlook la bloquea.
 
 ## Publicación
 Repo `intelecsl/intelec-pdf`, GitHub Pages desde `main` / raíz → `https://intelecsl.github.io/intelec-pdf/`.

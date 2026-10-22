@@ -4,7 +4,7 @@
 (function (global) {
   "use strict";
 
-  var APP_VERSION = "1.2";
+  var APP_VERSION = "1.3";
   var NAVY = "#293A5F", YELLOW = "#F8DB2C";
 
   function esc(s) {
